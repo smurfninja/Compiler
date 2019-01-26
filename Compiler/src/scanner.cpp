@@ -108,21 +108,56 @@ bool Scanner::isOtherSpecial(char achar){
    return false;
 }
 Token Scanner::recognizeName(){
-   inputfileptr;
+   char* buffer;
+   char delim = ' ';
+   inputfileptr->getline(buffer, 256, delim);
    Token x = Token();
    return x;
 }
 
+//FIND OUT HOW MANY CHARACTERS ARE GETTING STRIPPED OFF INPUT
 Token Scanner::recognizeSpecial(){
-  Token x = Token();
-  return x;
+   char c;
+   Symbol sname;
+   Symbol temp;
+   string buffer;
+   inputfileptr->get(c);
+   buffer = c+laChar;
+   if (buffer == ":=")
+      sname = ASSIGNMENT;
+   else if (buffer == "[]")
+      sname = SQUARE;
+   else if (buffer == "->")
+      sname = ARROW;
+   else
+      buffer = c;
+      for (int i = 2; i < 19; i++){
+	 temp = static_cast<Symbol>(i);
+	 if (spellS(temp) == buffer)
+	    sname = temp;
+      }
+ 
+   Token x = Token(sname, 0, buffer);
+   return x;
 }
 
 Token Scanner::recognizeNumeral(){
-  Token x = Token();
-  return x;
+   char c;
+   int value = 0;
+   Symbol sname = NUM;
+   string buffer = " ";
+   inputfileptr->get(c);
+   while (isNumeric(c)){
+      value = value*10 + c - '0';
+      buffer = buffer + c;
+      inputfileptr->get(c);
+   }
+   Token x = Token(NUM, value, buffer);
+   return x;
 }
 
 void Scanner::recognizeComment(){
-  return;
+   char* buffer;
+   inputfileptr->getline(buffer, 256);
+   return;
 }
