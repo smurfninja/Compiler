@@ -1,5 +1,10 @@
 #include "scanner.h"
 
+//getToken() will return the next Token in the
+//filestream. First we check to see if their is a comment
+//If so we call the recognizeComment() to remove the line
+//The next three conditionals will determine which token will
+//be created based on the first character and the lookahead character
 Token Scanner::getToken(){
    char curr;
    inputfileptr->get(curr);
@@ -8,7 +13,7 @@ Token Scanner::getToken(){
       inputfileptr->unget();
       recognizeComment();
    }
-   else if (isNumeric(curr)){
+   if (isNumeric(curr)){
       inputfileptr->unget();
       return recognizeNumeral();
    }
@@ -25,21 +30,34 @@ Token Scanner::getToken(){
    }
 }
 
+//A simple boolean returns true if the param achar
+//is an empty space, a new line, or a tab character
+//Defaults to return false
 bool Scanner::isWhitespace(char achar){
    if (achar == ' ' ||
-       achar == '\t')
+       achar == '\t' ||
+       achar == '\n')
       return true;
    return false;
 }
 
+//A simple boolean returns true if the param achar
+//is an alphabetical character
+//Defaults to return false
 bool Scanner::isAlpha(char achar){
    return isalpha(achar);
 }
 
+//A simple boolean returns true if the param achar
+//is a numerical character
+//Defaults to return false
 bool Scanner::isNumeric(char achar){
    return isdigit(achar);
 }
 
+//A simple boolean returns true if the param achar
+//is a special character
+//Defaults to return false
 //special symbols not yet covered := [] -> $
 bool Scanner::isSpecial(char achar){
    if (isPrimaryOp(achar))
@@ -59,6 +77,9 @@ bool Scanner::isSpecial(char achar){
    return false;
 }
 
+//A simple boolean returns true if the param achar
+//is an empty space, a new line, or a tab character
+//Defau
 bool Scanner::isPrimaryOp(char achar){
    if (achar == '&' ||
        achar == '|')
