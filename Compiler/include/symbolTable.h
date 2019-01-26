@@ -14,7 +14,7 @@ public:
   void loadResvd();
   ~Symtable(){}
   int search(string s);
-  int insert(string s);
+  int insert(string s, Token &t);
   bool full(){return occupied == SYMTABLESIZE;};
   int getOC(){return occupied;};
   void printTable();

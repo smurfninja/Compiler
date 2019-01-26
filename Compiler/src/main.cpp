@@ -1,12 +1,10 @@
 #include "token.h"
 #include <iostream>
-//#include <cstring>
+#include <cstring>
 
 int main(){
-  //string s = "Kelty";
-  //int x = hashfunc(s);
-  //std::cout << x << "\t" << s;
-  return 0;
+
+   return 0;
 }
 
 
@@ -16,3 +14,4 @@ int main(){
 //  string stest = "test";
 //  Token *t = new Token(s, i, stest);
 //  std::cout << *t;
+ 

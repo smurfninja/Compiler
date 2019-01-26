@@ -10,7 +10,8 @@
 class Scanner {
 public:
   Scanner(){};
-  Scanner(ifstream &instream, Symtable &symboltable);
+  Scanner(ifstream &instream, Symtable &symboltable):
+  inputfileptr(&instream), symtableptr(&symboltable){};
   ~Scanner();
   Token getToken();
 private:
@@ -26,6 +27,7 @@ private:
   bool isAddingOp(char achar);
   bool isMultiplyOp(char achar);
   bool isNotOp(char achar);
+  bool isOtherSpecial(char achar);
   Token recognizeName();
   Token recognizeSpecial();
   Token recognizeNumeral();

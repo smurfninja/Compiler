@@ -124,5 +124,6 @@ Token Scanner::recognizeNumeral(){
 }
 
 void Scanner::recognizeComment(){
-  return;
+   inputfileptr->getline
+   return;
 }

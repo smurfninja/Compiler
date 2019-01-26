@@ -1,8 +1,20 @@
 #include "symbolTable.h"
 
-void Symtable::loadResvd(){
 
-  return;
+//This code uses a stupid magic number in order to make it work quickly
+//I just use inherent knowledge that the reserved words lie between 24 and 40
+//in the enum Symbol. So I static cast those ints to symbols.
+//I then use the spellS(Symbol) function to convert that symbol to a string
+//That string is used in the hashfn() to determine the index of the keyword
+void Symtable::loadResvd(){
+   for (int i = 24; i < 41; i++){
+      Symbol word = static_cast<Symbol>(i);
+      string lexeme = spellS(word);
+      int index = hashfn(lexeme);
+      Token t = Token(word, 0, lexeme);
+      insert(lexeme, t);
+   }
+   return;
 }
 
 //This function casts each character of the string to an integer
@@ -27,8 +39,10 @@ int Symtable::search(string s){
    return -1;
 }
 
-int Symtable::insert(string s){
+int Symtable::insert(string s, Token &t){
    int x = hashfn(s);
+   htable[x] = t;
+   occupied++;
    return x;
 }
 
