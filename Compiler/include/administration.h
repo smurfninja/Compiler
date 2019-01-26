@@ -21,7 +21,7 @@ public:
 private:
   ifstream *inputfileptr;
   ofstream *outputfileptr;
-  Scanner &scanr;
+  //Scanner &scanr;
   int lineNo;
   bool correctline;
   int errorCount;

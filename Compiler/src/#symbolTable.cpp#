@@ -20,16 +20,18 @@ int Symtable::hashfn(string s){
 
 int Symtable::search(string s){
    int x = hashfn(s);
-   if (htable[x].getLexeme() == s){
-      occupied++;
+   if (htable[x].getLexeme() == s)
       return x;
-   }
    return -1;
 }
 
 int Symtable::insert(string s){
-   int x = hashfn(s);
-   return x;
+   if (search(s) == -1){
+      int x = hashfn(s);
+      
+      return x;
+   }
+   return -1;
 }
 
 void Symtable::printTable(){

@@ -21,6 +21,11 @@ private:
   bool isAlpha(char achar);
   bool isNumeric(char achar);
   bool isSpecial(char achar);
+  bool isPrimaryOp(char achar);
+  bool isRelationalOp(char achar);
+  bool isAddingOp(char achar);
+  bool isMultiplyOp(char achar);
+  bool isNotOp(char achar);
   Token recognizeName();
   Token recognizeSpecial();
   Token recognizeNumeral();

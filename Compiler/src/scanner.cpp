@@ -1,31 +1,79 @@
 #include "scanner.h"
 
 Scanner::Scanner(ifstream &instream, Symtable &symboltable){
-inputfileptr = instream;
-symtableptr = symboltable
+   //symtableptr = &symboltable;
+   // inputfileptr = instream;
 }
 
-Token Scanner:getToken(){
+Token Scanner::getToken(){
 
 }
 
-bool Scanner::isWhiteSpace(char achar){
-  if (achar == ' ' || achar == '\t')
-    return true;
-  return false;
+bool Scanner::isWhitespace(char achar){
+   if (achar == ' ' ||
+       achar == '\t')
+      return true;
+   return false;
 }
 
-bool Scanner:isAlpha(char achar){
-
-  return false;
+bool Scanner::isAlpha(char achar){
+   return isalpha(achar);
 }
 
 bool Scanner::isNumeric(char achar){
-  return false;
+   return isdigit(achar);
 }
 
 bool Scanner::isSpecial(char achar){
-  return false;
+   if (isPrimaryOp(achar))
+      return true;
+   else if (isRelationalOp(achar))
+      return true;
+   else if (isAddingOp(achar))
+      return true;
+   else if (isMultiplyOp(achar))
+      return true;
+   else if (isNotOp(achar))
+      return true;
+   else
+      return false;
+   return false;
+}
+
+bool Scanner::isPrimaryOp(char achar){
+   if (achar == '&' ||
+       achar == '|')
+      return true;
+   return false;
+}
+
+bool Scanner::isRelationalOp(char achar){
+   if (achar == '<' ||
+       achar == '=' ||
+       achar == '>')
+      return true;
+   return false;
+}
+
+bool Scanner::isAddingOp(char achar){
+   if (achar == '+' ||
+       achar == '-')
+      return true;
+   return false;
+}
+
+bool Scanner::isMultiplyOp(char achar){
+   if (achar == '*' ||
+       achar == '\\' ||
+       achar == '/')
+      return true;
+   return false;
+}
+
+bool Scanner::isNotOp(char achar){
+   if (achar == '~')
+      return true;
+   return false;
 }
 
 Token Scanner::recognizeName(){

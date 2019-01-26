@@ -1,9 +1,9 @@
 #include "administration.h"
 
 Administration::Administration(ifstream& in, ofstream &out, Scanner &sc){
-  outputfileptr = &out;
-  scanr = *sc;
-  inputfileptr = *in;
+   // outputfileptr = &out;
+   
+  //inputfileptr = *in;
 }
 
 void Administration::error(string text){
