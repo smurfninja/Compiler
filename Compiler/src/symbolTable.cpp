@@ -7,6 +7,11 @@
 //I then use the spellS(Symbol) function to convert that symbol to a string
 //That string is used in the hashfn() to determine the index of the keyword
 void Symtable::loadResvd(){
+   for (int j = 0; j < SYMTABLESIZE; j++){
+      string non = "noname";
+      Token noname = Token(NONAME, 0, non);
+      insert(non, noname);
+   }
    for (int i = 24; i < 41; i++){
       Symbol word = static_cast<Symbol>(i);
       string lexeme = spellS(word);
@@ -33,7 +38,6 @@ int Symtable::hashfn(string s){
 int Symtable::search(string s){
    int x = hashfn(s);
    if (htable[x].getLexeme() == s){
-      occupied++;
       return x;
    }
    return -1;
@@ -44,6 +48,10 @@ int Symtable::insert(string s, Token &t){
    htable[x] = t;
    occupied++;
    return x;
+}
+
+const Token& Symtable::index(int i){
+   return htable[i];
 }
 
 void Symtable::printTable(){

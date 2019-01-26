@@ -13,7 +13,8 @@ using namespace std;
 
 class Administration{
 public:
-  Administration(ifstream& in, ofstream &out, Scanner &sc);
+  Administration(ifstream& in, ofstream &out, Scanner &sc):
+   scanr(sc), outputfileptr(&out), inputfileptr(&in){};
   ~Administration(){};
   void NewLine(){lineNo++; correctline = true;};
   void error(string text);
@@ -21,7 +22,7 @@ public:
 private:
   ifstream *inputfileptr;
   ofstream *outputfileptr;
-  //Scanner &scanr;
+  Scanner &scanr;
   int lineNo;
   bool correctline;
   int errorCount;

@@ -16,7 +16,10 @@ Token Scanner::getToken(){
       inputfileptr->unget();
       return recognizeSpecial();
    }
-   else if (isAlpha(curr) && (isAlpha(laChar) || isNumeric(laChar) || laChar == '_')){
+   else if (isAlpha(curr) && (isAlpha(laChar) ||
+			      isNumeric(laChar) ||
+			      laChar == '_' ||
+			      laChar == ' ')){
       inputfileptr->unget();
       return recognizeName();
    }
@@ -110,8 +113,24 @@ bool Scanner::isOtherSpecial(char achar){
 Token Scanner::recognizeName(){
    char* buffer;
    char delim = ' ';
+   Symbol sname;
+   Symbol temp;
    inputfileptr->getline(buffer, 256, delim);
-   Token x = Token();
+   int index = symtableptr->search(buffer);
+   if (index > -1){
+      for (int i = 24; i < 41; i++){
+	 temp = static_cast<Symbol>(i);
+	 if (spellS(temp) == buffer)
+	    sname = temp;
+      }
+      Token x = Token(sname, 0, buffer);
+      return x;
+   }
+   else if (index < 0){
+      Token x = Token(ID, 0, buffer);
+      return x;
+   }
+   Token x = Token(BADCHAR, 0, spellS(BADCHAR));
    return x;
 }
 
@@ -123,12 +142,16 @@ Token Scanner::recognizeSpecial(){
    string buffer;
    inputfileptr->get(c);
    buffer = c+laChar;
-   if (buffer == ":=")
+   if (buffer == ":="){
       sname = ASSIGNMENT;
-   else if (buffer == "[]")
+   }
+   else if (buffer == "[]"){
       sname = SQUARE;
-   else if (buffer == "->")
+   }
+   else if (buffer == "->"){
+      
       sname = ARROW;
+   }
    else
       buffer = c;
       for (int i = 2; i < 19; i++){
