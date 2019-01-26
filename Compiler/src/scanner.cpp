@@ -56,7 +56,9 @@ bool Scanner::isNumeric(char achar){
 }
 
 //A simple boolean returns true if the param achar
-//is a special character
+//is a special character. It does this by calling
+//helper functions. The purpose of this is to group
+//the special characters into categories for later use
 //Defaults to return false
 //special symbols not yet covered := [] -> $
 bool Scanner::isSpecial(char achar){
@@ -78,8 +80,8 @@ bool Scanner::isSpecial(char achar){
 }
 
 //A simple boolean returns true if the param achar
-//is an empty space, a new line, or a tab character
-//Defau
+//is one of the two primary operators & or |
+//Defaults to return false
 bool Scanner::isPrimaryOp(char achar){
    if (achar == '&' ||
        achar == '|')
@@ -87,6 +89,9 @@ bool Scanner::isPrimaryOp(char achar){
    return false;
 }
 
+//A simple boolean returns true if the param achar
+//Is one of the relational operators < = >
+//Defaults to return false
 bool Scanner::isRelationalOp(char achar){
    if (achar == '<' ||
        achar == '=' ||
@@ -95,6 +100,9 @@ bool Scanner::isRelationalOp(char achar){
    return false;
 }
 
+//A simple boolean returns true if the param achar
+//is one of the adding operators + -
+//Defaults to return false
 bool Scanner::isAddingOp(char achar){
    if (achar == '+' ||
        achar == '-')
@@ -102,6 +110,9 @@ bool Scanner::isAddingOp(char achar){
    return false;
 }
 
+//A simple boolean returns true if the param achar
+//is one of the multiply operators * \ /
+//Defaults to return false
 bool Scanner::isMultiplyOp(char achar){
    if (achar == '*' ||
        achar == '\\' ||
@@ -110,12 +121,21 @@ bool Scanner::isMultiplyOp(char achar){
    return false;
 }
 
+//A simple boolean returns true if the param achar
+//is the negation operator ~
+//Defaults to return false
 bool Scanner::isNotOp(char achar){
    if (achar == '~')
       return true;
    return false;
 }
 
+//A simple boolean returns true if the param achar
+//is the remaining special characters not listed
+//in PL to be an operator
+//Could be ported into two aditional functions
+//isPunctuation() isParan() but am lazy
+//Defaults to return false
 bool Scanner::isOtherSpecial(char achar){
    if (achar == '.' ||
        achar == ',' ||
@@ -131,20 +151,26 @@ bool Scanner::isOtherSpecial(char achar){
       return false;
    return false;
 }
+
+//Called by getToken() to recognize a token
+//that is either an ID or a reserved word
+//first the buffer loads the rest of the line
+//until a white space is encountered
+//Next we search the symbol table to see if
+//the word already exists. If it exists then it
+//is simply returned. If it needs to be created,
+//we assign the symbol ID and the lexeme is the
+//buffer string
+//Default is badchar returned
 Token Scanner::recognizeName(){
    char* buffer;
    char delim = ' ';
-   Symbol sname;
+   Symbol sname = NONAME;
    Symbol temp;
    inputfileptr->getline(buffer, 256, delim);
    int index = symtableptr->search(buffer);
    if (index > -1){
-      for (int i = 24; i < 41; i++){
-	 temp = static_cast<Symbol>(i);
-	 if (spellS(temp) == buffer)
-	    sname = temp;
-      }
-      Token x = Token(sname, 0, buffer);
+      Token x = symtableptr->index(index);
       return x;
    }
    else if (index < 0){
@@ -155,6 +181,11 @@ Token Scanner::recognizeName(){
    return x;
 }
 
+//First we determine if the special character
+//is an ASSIGNMENT SQUARE or ARROW because those
+//special tokens use two special symbols
+//Then we iterate through the list of symbols and find the appropriate
+//symbol to assign to the token
 //FIND OUT HOW MANY CHARACTERS ARE GETTING STRIPPED OFF INPUT
 Token Scanner::recognizeSpecial(){
    char c;
@@ -185,6 +216,10 @@ Token Scanner::recognizeSpecial(){
    return x;
 }
 
+//Recopgnize numeral reads a character and adds the numeral
+//to the running total labelled value
+//buffer concatenates the character to its string
+//returns the completed token with NUM assigned as symbol
 Token Scanner::recognizeNumeral(){
    char c;
    int value = 0;
@@ -200,6 +235,10 @@ Token Scanner::recognizeNumeral(){
    return x;
 }
 
+
+//Recognize comment is called when a $ is seen
+//the rest of the line is removed and passed back
+//to gettoken
 void Scanner::recognizeComment(){
    char* buffer;
    inputfileptr->getline(buffer, 256);

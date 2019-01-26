@@ -35,6 +35,12 @@ int Symtable::hashfn(string s){
   return x%SYMTABLESIZE;
 }
 
+//using the hashfn() the index is determined
+//using that index we find the associated lexeme
+//for that token and confirm it matches the
+//param s if it does we return the index
+//else return -1 denoting failure to locate the
+//lexeme provided
 int Symtable::search(string s){
    int x = hashfn(s);
    if (htable[x].getLexeme() == s){
@@ -43,6 +49,12 @@ int Symtable::search(string s){
    return -1;
 }
 
+//insert takes in a string and a token
+//the string is the token's lexeme
+//the hashfn() is used to determine the index where
+//The token should be inserted
+//********************Doesn't handle collisions*****************
+//updates the occupied count
 int Symtable::insert(string s, Token &t){
    int x = hashfn(s);
    htable[x] = t;

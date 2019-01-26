@@ -12,11 +12,12 @@ class Token {
 public:
   Token():sname(NONAME),svalue(attval(-1,string(""))){};
   Token(Symbol s, int v, string l ):sname(s),svalue(attval(v,l)){};
-  ~Token(){};
-  Symbol getSymbol()const {return sname;};
-  int getValue()const {return svalue.value;};
-  string getLexeme()const {return svalue.lexeme;};
-  void insert(ostream &os) {os << "Token: " << spellS(sname) << "\n"
+   ~Token(){};
+   Token& operator=(const Token& t); 
+   Symbol getSymbol()const {return sname;};
+   int getValue()const {return svalue.value;};
+   string getLexeme()const {return svalue.lexeme;};
+   void insert(ostream &os) {os << "Token: " << spellS(sname) << "\n"
                               << "\tAttributes: " << "\n"
                               << "\t\tLexeme: " << getLexeme() << "\n"
                               << "\t\tValue: " << getValue() << endl;}
