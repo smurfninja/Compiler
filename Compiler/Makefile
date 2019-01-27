@@ -1,7 +1,7 @@
 CXX=g++
 CXXFLAGS= -std=c++0x -g -fprofile-arcs -ftest-coverage
 
-# LINKFLAGS= -lgtest /usr/src/gmock/src/gmock-all.cc -lpthread
+LINKFLAGS= -lgtest /usr/src/gmock/gmock-all.cc -lpthread
 
 SRC_DIR = src
 SRCS =

@@ -1,0 +1,53 @@
+#ifndef TOKENTEST_CPP
+#define TOKENTEST_CPP
+
+#include "token.h"
+#include "gtest/gtest.h"
+
+TEST(TokenTest, TokenDefaultConstructor){
+   Token *t = new Token();
+   Symbol stest = NONAME;
+   int negOne = -1;
+   string empty = "";
+   EXPECT_EQ(stest, t->getSymbol());
+   EXPECT_EQ(negOne, t->getValue());
+   EXPECT_EQ(empty, t->getLexeme());
+}
+
+TEST(TokenTest, TokenExplicitConstructor){
+
+}
+
+TEST(TokenTest, TokenDestructor){
+
+}
+
+TEST(TokenTest, TokenCopyOperator){
+
+}
+
+TEST(TokenTest, TokenGetSymbol){
+
+}
+
+TEST(TokenTest, TokenGetValue){
+
+}
+
+TEST(TokenTest, TokenGetLexeme){
+
+}
+
+TEST(TokenTest, TokenInsert){
+
+}
+
+TEST(TokenTest, TokenOstreamOperator){
+   
+}
+
+TEST(TokenTest, TokenSpellSymbol){
+
+}
+
+#endif

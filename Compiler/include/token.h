@@ -10,7 +10,7 @@ string spellS(Symbol);
 
 class Token {
 public:
-  Token():sname(NONAME),svalue(attval(-1,string(""))){};
+   Token():sname(NONAME),svalue(attval(-1,string(""))){};
   Token(Symbol s, int v, string l ):sname(s),svalue(attval(v,l)){};
    ~Token(){};
    Token& operator=(const Token& t); 
